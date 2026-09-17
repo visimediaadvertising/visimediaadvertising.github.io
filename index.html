@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VisiMedia Advertising — running text, sistem presensi digital, dan konsultasi IT untuk instansi dan perusahaan.">
+    <meta name="theme-color" content="#0a0e1a">
+    <title>Visimedia Advertising</title>
+
+    <!-- Tipografi: Sora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon: logo V, koordinat sama persis dengan simbol di bawah -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='100%25' stop-color='%23b0b0b0'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%233b9eff'/%3E%3Cstop offset='100%25' stop-color='%230044b3'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23ffe033'/%3E%3Cstop offset='100%25' stop-color='%23d48800'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke-linejoin='round' stroke-linecap='round' stroke-width='3'%3E%3Cpath d='M20.79 17.23 L43.21 17.23 L38.12 27.42 L25.88 27.42 Z' fill='url(%23c)' stroke='url(%23c)'/%3E%3Cpath d='M10.6 17.23 L20.79 17.23 L25.88 27.42 L32 58 Z' fill='url(%23a)' stroke='url(%23a)'/%3E%3Cpath d='M43.21 17.23 L53.4 17.23 L32 58 L25.88 27.42 L38.12 27.42 Z' fill='url(%23b)' stroke='url(%23b)'/%3E%3Cpolygon points='25.88,27.42 38.12,27.42 32,39.65' fill='%23ffffff' stroke='%23ffffff'/%3E%3C/g%3E%3C/svg%3E">
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-dark: #0a0e1a;
+            --navy-mid: #0f1628;
+            --navy-light: #141d35;
+            --blue-primary: #1a6dd4;
+            --blue-bright: #2196F3;
+            --blue-glow: #4da6ff;
+            --blue-deep: #0d47a1;
+            --white: #ffffff;
+            --silver: #c8ccd4;
+            --silver-light: #e0e3ea;
+            --gold: #f0b800;
+            --gold-light: #ffd740;
+            --gold-dark: #c49200;
+            --ring-blue: #1565C0;
+            --ring-silver: #b0b5c0;
+
+            /* Ukuran lingkaran logo hero — satu sumber kebenaran */
+            --logo-size: clamp(190px, 38vw, 240px);
+            --ring-thickness: 8px;
+            --ring-gap: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Sora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--navy-dark);
+            -webkit-font-smoothing: antialiased;
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sprite SVG tersembunyi — definisi logo dipakai ulang lewat <use> */
+        .svg-sprite {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* Fokus keyboard terlihat di seluruh elemen interaktif */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--blue-glow);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* ===== HEADER / NAVBAR ===== */
+        header {
+            background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy-dark) 100%);
+            border-bottom: 2px solid var(--blue-primary);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(26, 109, 212, 0.3);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .header-logo .logo-mark {
+            width: 42px;
+            height: 42px;
+            filter: drop-shadow(0 0 6px rgba(33, 150, 243, 0.5));
+        }
+
+        .header-logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .header-logo-text .visi {
+            color: var(--white);
+        }
+
+        .header-logo-text .media {
+            color: var(--blue-bright);
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s, text-shadow 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-bright);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--blue-bright);
+            text-shadow: 0 0 8px rgba(33, 150, 243, 0.5);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(26, 109, 212, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Pola honeycomb */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%231a6dd4' fill-opacity='0.04'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        /* ===== LOGO UTAMA (V besar di dalam cincin) ===== */
+        .main-logo-container {
+            position: relative;
+            width: var(--logo-size);
+            height: var(--logo-size);
+            margin-bottom: 30px;
+            z-index: 1;
+        }
+
+        .main-logo-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: var(--ring-thickness) solid transparent;
+            border-top-color: var(--ring-blue);
+            border-right-color: var(--ring-blue);
+            border-bottom-color: var(--ring-silver);
+            border-left-color: var(--ring-silver);
+            animation: ringRotate 8s linear infinite;
+            box-shadow: 0 0 30px rgba(26, 109, 212, 0.2), inset 0 0 30px rgba(26, 109, 212, 0.1);
+        }
+
+        @keyframes ringRotate {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        .main-logo-inner {
+            position: absolute;
+            inset: var(--ring-gap);
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 40%, var(--navy-light) 0%, var(--navy-dark) 100%);
+            display: grid;
+            place-items: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 92% dari diameter piringan dalam: sudut V berjarak sama ke tepi cincin */
+        .main-logo-inner .logo-mark {
+            width: 92%;
+            height: 92%;
+            filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.55));
+        }
+
+        /* ===== BRAND NAME ===== */
+        .brand-name {
+            text-align: center;
+            z-index: 1;
+            margin-bottom: 8px;
+        }
+
+        .brand-name h1 {
+            font-size: clamp(1.6rem, 7vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        .brand-name h1 .visi {
+            color: var(--white);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .brand-name h1 .media {
+            color: var(--blue-bright);
+            text-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .brand-subtitle {
+            font-size: clamp(0.85rem, 3vw, 1.1rem);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--silver);
+            font-weight: 300;
+            margin-bottom: 16px;
+            z-index: 1;
+        }
+
+        .brand-tagline {
+            font-size: clamp(0.72rem, 2.6vw, 0.85rem);
+            letter-spacing: 3px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .brand-tagline .tag-visi { color: var(--white); }
+        .brand-tagline .tag-dot1 { color: var(--gold); margin: 0 8px; }
+        .brand-tagline .tag-media { color: var(--gold-light); }
+        .brand-tagline .tag-dot2 { color: var(--blue-bright); margin: 0 8px; }
+        .brand-tagline .tag-hasil { color: var(--blue-bright); }
+
+        .hero-desc {
+            position: relative;
+            z-index: 1;
+            max-width: 62ch;
+            margin: 24px auto 0;
+            text-align: center;
+            font-size: clamp(0.92rem, 2.6vw, 1.02rem);
+            line-height: 1.8;
+            font-weight: 300;
+            color: var(--silver);
+        }
+
+        .hero-desc strong {
+            color: var(--silver-light);
+            font-weight: 500;
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-wrapper {
+            background: linear-gradient(90deg, var(--blue-deep), var(--blue-primary), var(--blue-deep));
+            padding: 14px 0;
+            overflow: hidden;
+            position: relative;
+            border-top: 1px solid var(--blue-bright);
+            border-bottom: 1px solid var(--blue-bright);
+            box-shadow: 0 4px 20px rgba(26, 109, 212, 0.3);
+        }
+
+        .marquee-wrapper::before,
+        .marquee-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .marquee-wrapper::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--blue-deep), transparent);
+        }
+
+        .marquee-wrapper::after {
+            right: 0;
+            background: linear-gradient(-90deg, var(--blue-deep), transparent);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marqueeScroll 20s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-track span {
+            white-space: nowrap;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--white);
+            padding: 0 40px;
+        }
+
+        .marquee-track span .sep {
+            color: var(--gold-light);
+            margin: 0 12px;
+        }
+
+        @keyframes marqueeScroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ===== CONTENT SECTION ===== */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 24px 80px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--navy-mid), var(--navy-dark));
+            border: 1px solid rgba(26, 109, 212, 0.3);
+            border-radius: 16px;
+            padding: 36px 28px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(26, 109, 212, 0.25);
+            border-color: var(--blue-primary);
+        }
+
+        /* Kartu 1: Running Text — aksen emas */
+        .card-running-text::before {
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+        }
+        .card-running-text .card-icon {
+            color: var(--gold);
+            background: rgba(240, 184, 0, 0.12);
+            border: 1px solid rgba(240, 184, 0, 0.28);
+        }
+        .card-running-text .card-tag {
+            background: rgba(240, 184, 0, 0.15);
+            color: var(--gold-light);
+            border: 1px solid rgba(240, 184, 0, 0.3);
+        }
+
+        /* Kartu 2: Presensi — aksen biru */
+        .card-presensi::before {
+            background: linear-gradient(90deg, var(--blue-deep), var(--blue-bright), var(--blue-deep));
+        }
+        .card-presensi .card-icon {
+            color: var(--blue-bright);
+            background: rgba(33, 150, 243, 0.12);
+            border: 1px solid rgba(33, 150, 243, 0.28);
+        }
+        .card-presensi .card-tag {
+            background: rgba(33, 150, 243, 0.15);
+            color: var(--blue-bright);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        /* Kartu 3: IT Solution — aksen perak */
+        .card-itsolution::before {
+            background: linear-gradient(90deg, var(--ring-silver), var(--silver-light), var(--ring-silver));
+        }
+        .card-itsolution .card-icon {
+            color: var(--silver-light);
+            background: rgba(200, 204, 212, 0.10);
+            border: 1px solid rgba(200, 204, 212, 0.24);
+        }
+        .card-itsolution .card-tag {
+            background: rgba(200, 204, 212, 0.12);
+            color: var(--silver-light);
+            border: 1px solid rgba(200, 204, 212, 0.25);
+        }
+
+        /* Glow hover mengikuti aksen masing-masing kartu (ditulis setelah .card:hover) */
+        .card-running-text:hover {
+            border-color: var(--gold-dark);
+            box-shadow: 0 12px 40px rgba(240, 184, 0, 0.18);
+        }
+        .card-running-text:hover .card-icon {
+            background: rgba(240, 184, 0, 0.2);
+            border-color: rgba(240, 184, 0, 0.5);
+        }
+
+        .card-presensi:hover {
+            border-color: var(--blue-primary);
+            box-shadow: 0 12px 40px rgba(26, 109, 212, 0.28);
+        }
+        .card-presensi:hover .card-icon {
+            background: rgba(33, 150, 243, 0.2);
+            border-color: rgba(33, 150, 243, 0.5);
+        }
+
+        .card-itsolution:hover {
+            border-color: var(--ring-silver);
+            box-shadow: 0 12px 40px rgba(200, 204, 212, 0.16);
+        }
+        .card-itsolution:hover .card-icon {
+            background: rgba(200, 204, 212, 0.18);
+            border-color: rgba(200, 204, 212, 0.45);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 18px;
+            transition: background 0.4s, border-color 0.4s;
+        }
+
+        .card-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke-width: 1.6;
+        }
+
+        .card-tag {
+            align-self: flex-start;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .card p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--silver);
+            font-weight: 300;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-top: 18px;
+            padding: 0;
+        }
+
+        .card-features li {
+            font-size: 0.85rem;
+            color: var(--silver);
+            padding: 6px 0 6px 20px;
+            position: relative;
+            font-weight: 400;
+        }
+
+        .card-features li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        .card-running-text .card-features li::before { color: var(--gold); }
+        .card-presensi .card-features li::before { color: var(--blue-bright); }
+        .card-itsolution .card-features li::before { color: var(--silver-light); }
+
+        .card-btn {
+            align-self: flex-start;
+            margin-top: auto;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: box-shadow 0.3s, transform 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .card-features + .card-btn { margin-top: 22px; }
+
+        .card-running-text .card-btn {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--navy-dark);
+        }
+        .card-running-text .card-btn:hover {
+            box-shadow: 0 4px 16px rgba(240, 184, 0, 0.4);
+        }
+
+        .card-presensi .card-btn {
+            background: linear-gradient(135deg, var(--blue-deep), var(--blue-primary));
+            color: var(--white);
+        }
+        .card-presensi .card-btn:hover {
+            box-shadow: 0 4px 16px rgba(26, 109, 212, 0.5);
+        }
+
+        .card-itsolution .card-btn {
+            background: linear-gradient(135deg, #5a6070, var(--silver));
+            color: var(--navy-dark);
+        }
+        .card-itsolution .card-btn:hover {
+            box-shadow: 0 4px 16px rgba(200, 204, 212, 0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--navy-mid);
+            border-top: 1px solid rgba(26, 109, 212, 0.3);
+            text-align: center;
+            padding: 24px;
+            font-size: 0.8rem;
+            color: var(--silver);
+            letter-spacing: 1px;
+        }
+
+        footer .footer-brand { font-weight: 700; }
+        footer .footer-brand .visi { color: var(--white); }
+        footer .footer-brand .media { color: var(--blue-bright); }
+
+        /* ===== TOMBOL WHATSAPP MENGAMBANG ===== */
+        .wa-float {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px 12px 14px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #1faa59, #25D366);
+            color: #052e18;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .wa-float svg {
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .wa-float:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 34px rgba(37, 211, 102, 0.5);
+        }
+
+        /* Denyut halus untuk menarik perhatian */
+        .wa-float::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            border: 2px solid rgba(37, 211, 102, 0.6);
+            animation: waPulse 2.6s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes waPulse {
+            0%   { transform: scale(1); opacity: 0.7; }
+            70%  { transform: scale(1.18); opacity: 0; }
+            100% { transform: scale(1.18); opacity: 0; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .content-section {
+                grid-template-columns: 1fr;
+                max-width: 520px;
+            }
+            .brand-name h1 { letter-spacing: 4px; }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            nav { gap: 16px; }
+            .hero { padding: 40px 20px 32px; }
+            .brand-subtitle { letter-spacing: 4px; }
+            .card { padding: 28px 22px; }
+
+            /* Ruang layar terbatas: sisakan ikonnya saja */
+            .wa-float {
+                right: 16px;
+                bottom: 16px;
+                padding: 14px;
+            }
+            .wa-float .wa-label { display: none; }
+
+            /* Agar teks footer tidak tertutup tombol */
+            footer { padding-bottom: 84px; }
+        }
+
+        /* Hormati preferensi pengurangan animasi */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .main-logo-ring,
+            .marquee-track,
+            .wa-float::before { animation: none; }
+            .card:hover,
+            .wa-float:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== DEFINISI LOGO (dipakai ulang di header & hero) ===== -->
+    <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="v-white" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#b0b0b0"/>
+            </linearGradient>
+            <linearGradient id="v-blue" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#3b9eff"/>
+                <stop offset="100%" stop-color="#0044b3"/>
+            </linearGradient>
+            <linearGradient id="v-yellow" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffe033"/>
+                <stop offset="100%" stop-color="#d48800"/>
+            </linearGradient>
+
+            <!--
+                Geometri logo V:
+                - Simetris terhadap sumbu x = 32
+                - Tiga sudut terluar (10.60,17.23) (53.40,17.23) (32,58) berjarak
+                  persis 26 unit dari titik (32,32) = pusat viewBox.
+                  Jadi ketiga ujung V menyentuh satu lingkaran yang sepusat
+                  dengan cincin, sehingga jarak ke cincin sama rata.
+            -->
+            <symbol id="logo-v" viewBox="0 0 64 64">
+                <g stroke-linejoin="round" stroke-linecap="round" stroke-width="3">
+                    <!-- Trapesium kuning atas -->
+                    <path d="M20.79 17.23 L43.21 17.23 L38.12 27.42 L25.88 27.42 Z"
+                          fill="url(#v-yellow)" stroke="url(#v-yellow)"/>
+                    <!-- Lengan kiri perak -->
+                    <path d="M10.60 17.23 L20.79 17.23 L25.88 27.42 L32 58 Z"
+                          fill="url(#v-white)" stroke="url(#v-white)"/>
+                    <!-- Lengan kanan biru -->
+                    <path d="M43.21 17.23 L53.40 17.23 L32 58 L25.88 27.42 L38.12 27.42 Z"
+                          fill="url(#v-blue)" stroke="url(#v-blue)"/>
+                    <!-- Segitiga putih tengah -->
+                    <polygon points="25.88,27.42 38.12,27.42 32,39.65"
+                             fill="#ffffff" stroke="#ffffff"/>
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <a href="#" class="header-logo" aria-label="Visimedia Advertising, ke beranda">
+            <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo-v"/></svg>
+            <span class="header-logo-text">
+                <span class="visi">VISI</span><span class="media">MEDIA</span>
+            </span>
+        </a>
+        <nav>
+            <a href="#layanan">Layanan</a>
+            <a href="#tentang">Tentang</a>
+            <a href="#kontak">Kontak</a>
+        </nav>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="main-logo-container">
+            <div class="main-logo-ring"></div>
+            <div class="main-logo-inner">
+                <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo-v"/></svg>
+            </div>
+        </div>
+
+        <div class="brand-name">
+            <h1><span class="visi">VISI</span><span class="media">MEDIA</span></h1>
+        </div>
+        <p class="brand-subtitle">Advertising</p>
+        <p class="brand-tagline">
+            <span class="tag-visi">VISI ANDA</span>
+            <span class="tag-dot1">●</span>
+            <span class="tag-media">MEDIA KAMI</span>
+            <span class="tag-dot2">●</span>
+            <span class="tag-hasil">HASIL MAKSIMAL</span>
+        </p>
+
+        <p class="hero-desc">
+            VisiMedia menghadirkan solusi teknologi terpadu yang melayani pembuatan
+            <strong>LED Running Text</strong> periklanan, <strong>sistem presensi digital</strong>
+            berbasis laporan real-time, <strong>optimasi web</strong>, hingga digitalisasi
+            operasional menyeluruh untuk kebutuhan sekolah, instansi, dan perusahaan.
+        </p>
+    </section>
+
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee-wrapper" aria-hidden="true">
+        <div class="marquee-track">
+            <span>Visi Anda <span class="sep">|</span> Media Kami <span class="sep">|</span> Hasil Maksimal <span class="sep">|</span> Kontak IG @visimedia.adv <span class="sep">|</span></span>
+            <span>Visi Anda <span class="sep">|</span> Media Kami <span class="sep">|</span> Hasil Maksimal <span class="sep">|</span> Kontak IG @visimedia.adv <span class="sep">|</span></span>
+            <span>Visi Anda <span class="sep">|</span> Media Kami <span class="sep">|</span> Hasil Maksimal <span class="sep">|</span> Kontak IG @visimedia.adv <span class="sep">|</span></span>
+            <span>Visi Anda <span class="sep">|</span> Media Kami <span class="sep">|</span> Hasil Maksimal <span class="sep">|</span> Kontak IG @visimedia.adv <span class="sep">|</span></span>
+        </div>
+    </div>
+
+    <!-- ===== KARTU LAYANAN ===== -->
+    <section class="content-section" id="layanan">
+
+        <article class="card card-running-text">
+            <span class="card-icon" aria-hidden="true">
+                <!-- Lucide: megaphone -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m3 11 18-5v12L3 14v-3z"/>
+                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+                </svg>
+            </span>
+            <span class="card-tag">Digital Signage</span>
+            <h2>Running Text</h2>
+            <p>Solusi papan informasi digital dengan teks berjalan untuk menampilkan pesan, promosi, dan pengumuman secara real-time di lokasi strategis.</p>
+            <ul class="card-features">
+                <li>LED Display berbagai ukuran</li>
+                <li>Kontrol konten via aplikasi</li>
+                <li>Jadwal tayang otomatis</li>
+                <li>Cocok untuk toko, kantor &amp; instansi</li>
+            </ul>
+            <button class="card-btn" type="button">Selengkapnya</button>
+        </article>
+
+        <article class="card card-presensi">
+            <span class="card-icon" aria-hidden="true">
+                <!-- Lucide: fingerprint -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
+                    <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
+                    <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/>
+                    <path d="M2 12a10 10 0 0 1 18-6"/>
+                    <path d="M2 16h.01"/>
+                    <path d="M21.8 16c.2-2 .131-5.354 0-6"/>
+                    <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/>
+                    <path d="M8.65 22c.21-.66.45-1.32.57-2"/>
+                    <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
+                </svg>
+            </span>
+            <span class="card-tag">Absensi Online</span>
+            <h2>Sistem Presensi Digital</h2>
+            <p>Sistem kehadiran modern berbasis teknologi digital untuk mencatat presensi karyawan secara akurat, cepat, dan terintegrasi.</p>
+            <ul class="card-features">
+                <li>Fingerprint &amp; Face Recognition</li>
+                <li>Absensi via mobile app</li>
+                <li>Laporan real-time &amp; rekap otomatis</li>
+                <li>Integrasi dengan sistem HRD</li>
+            </ul>
+            <button class="card-btn" type="button">Selengkapnya</button>
+        </article>
+
+        <article class="card card-itsolution">
+            <span class="card-icon" aria-hidden="true">
+                <!-- Lucide: cpu -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="16" height="16" x="4" y="4" rx="2"/>
+                    <rect width="6" height="6" x="9" y="9" rx="1"/>
+                    <path d="M15 2v2"/><path d="M15 20v2"/>
+                    <path d="M2 15h2"/><path d="M2 9h2"/>
+                    <path d="M20 15h2"/><path d="M20 9h2"/>
+                    <path d="M9 2v2"/><path d="M9 20v2"/>
+                </svg>
+            </span>
+            <span class="card-tag">Konsultasi IT</span>
+            <h2>IT Solution</h2>
+            <p>Konsultasi digitalisasi menyeluruh untuk instansi dan perusahaan. Kami membantu transformasi digital dari perencanaan hingga implementasi.</p>
+            <ul class="card-features">
+                <li>Audit &amp; analisis kebutuhan IT</li>
+                <li>Perancangan sistem digital</li>
+                <li>Implementasi &amp; migrasi data</li>
+                <li>Pelatihan &amp; dukungan teknis</li>
+            </ul>
+            <button class="card-btn" type="button">Selengkapnya</button>
+        </article>
+
+    </section>
+
+    <!-- ===== TOMBOL WHATSAPP MENGAMBANG ===== -->
+    <a class="wa-float"
+       href="https://wa.me/6281229056658?text=Halo%20VisiMedia%2C%20saya%20ingin%20bertanya%20tentang%20layanan%20Anda."
+       target="_blank" rel="noopener"
+       aria-label="Hubungi VisiMedia lewat WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+        </svg>
+        <span class="wa-label">Chat WhatsApp</span>
+    </a>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2026 <span class="footer-brand"><span class="visi">VISI</span><span class="media">MEDIA</span> Advertising</span> — Visi Anda, Media Kami, Hasil Maksimal.</p>
+    </footer>
+
+</body>
+</html>
