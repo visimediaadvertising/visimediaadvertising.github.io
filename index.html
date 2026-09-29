@@ -573,6 +573,26 @@
             box-shadow: 0 4px 16px rgba(200, 204, 212, 0.4);
         }
 
+        /* ===== VIDEO DIGITAL SIGNAGE ===== */
+        .card-video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 16px 0;
+            border: 1px solid rgba(240, 184, 0, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(240, 184, 0, 0.1);
+            display: block;
+            background: var(--navy-dark);
+            transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+        }
+
+        .card-running-text:hover .card-video {
+            transform: scale(1.02);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 25px rgba(240, 184, 0, 0.25);
+            border-color: rgba(240, 184, 0, 0.5);
+        }
+
         /* ===== FOOTER ===== */
         footer {
             background: var(--navy-mid);
@@ -677,6 +697,7 @@
             .wa-float::before { animation: none; }
             .card:hover,
             .wa-float:hover { transform: none; }
+            .card-running-text:hover .card-video { transform: none; }
         }
     </style>
 </head>
@@ -698,14 +719,6 @@
                 <stop offset="100%" stop-color="#d48800"/>
             </linearGradient>
 
-            <!--
-                Geometri logo V:
-                - Simetris terhadap sumbu x = 32
-                - Tiga sudut terluar (10.60,17.23) (53.40,17.23) (32,58) berjarak
-                  persis 26 unit dari titik (32,32) = pusat viewBox.
-                  Jadi ketiga ujung V menyentuh satu lingkaran yang sepusat
-                  dengan cincin, sehingga jarak ke cincin sama rata.
-            -->
             <symbol id="logo-v" viewBox="0 0 64 64">
                 <g stroke-linejoin="round" stroke-linecap="round" stroke-width="3">
                     <!-- Trapesium kuning atas -->
@@ -792,6 +805,15 @@
             </span>
             <span class="card-tag">Digital Signage</span>
             <h2>Running Text</h2>
+            
+            <!-- Video Autoplay Digital Signage -->
+            <video class="card-video" autoplay muted loop playsinline poster="https://via.placeholder.com/600x340/0f1628/f0b800?text=Digital+Signage+Preview">
+                <!-- GANTI URL DI BAWAH INI DENGAN FILE VIDEO ANDA SENDIRI -->
+                <!-- Contoh: src="assets/video-running-text.mp4" -->
+                <source src="aset/visimedia.mp4" type="video/mp4">
+                Browser Anda tidak mendukung pemutaran video.
+            </video>
+
             <p>Solusi papan informasi digital dengan teks berjalan untuk menampilkan pesan, promosi, dan pengumuman secara real-time di lokasi strategis.</p>
             <ul class="card-features">
                 <li>LED Display berbagai ukuran</li>
